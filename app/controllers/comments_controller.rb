@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+	before_action :authenticate_user!
 	before_action :find_message, only:[:create, :edit, :update, :destroy]
 	before_action :find_comment, only:[ :edit, :update, :destroy]
 	def create
@@ -8,7 +9,8 @@ class CommentsController < ApplicationController
 		if @comment.save
 			redirect_to message_path(@message)
 		else
-			render 'new'
+			redirect_to message_path(@message)
+			flash[:danger] = "Comment Can't be blank"
 		end
 	end
 	def edit
@@ -29,7 +31,7 @@ class CommentsController < ApplicationController
 		redirect_to message_path(@message)
 	end
 	private
-	
+
 	def find_message
 		@message = Message.find(params[:message_id])
 	end

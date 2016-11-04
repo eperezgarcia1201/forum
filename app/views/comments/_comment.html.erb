@@ -3,7 +3,7 @@
 	<p class="comment-posted-by">By: <%= comment.user.email if comment.user %> <%= time_ago_in_words(comment.created_at) %> ago</p>
 </div>
 <div class="links btn-group">
-		<% if comment.user_id == current_user.id %>
+		<% if user_signed_in? && (comment.user_id == current_user.id) %>
 		<%= link_to "Edit", edit_message_comment_path(comment.message, comment), class: "btn btn-info" %>
 		<%= link_to "delete", message_comment_path(comment.message, comment), method: :delete, data: {comfirm: "Are you sure?"}, class: "btn btn-danger" %>
 		<% end %>
