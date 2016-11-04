@@ -14,6 +14,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(messages_params)
+    @message.user = current_user
     if @message.save
       redirect_to root_path
     else
