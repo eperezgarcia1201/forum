@@ -1,10 +1,11 @@
 class MessagesController < ApplicationController
+  before_action :find_messages, only: [:show, :edit, :update, :destroy]
   def index
     @messages = Message.all.order('created_at DESC')
   end
 
   def show
-    @message = Message.find(params[:id])
+    
   end
 
   def new
@@ -31,6 +32,9 @@ class MessagesController < ApplicationController
   end
 
   private 
+  def find_messages
+    @message = Message.find(params[:id])
+  end
 
   def messages_params
     params.require(:message).permit(:title, :description)
